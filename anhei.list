@@ -1,8 +1,8 @@
-## > Diablolll
-
-  - DOMAIN-SUFFIX,easebar.com
-  - DOMAIN-SUFFIX,swrve.com
-  - DOMAIN-SUFFIX,battle.net
-  - DOMAIN-SUFFIX,battlenet.com.cn
-  - DOMAIN-SUFFIX,blzstatic.cn
-  - DOMAIN-SUFFIX,blizzard.com
+payload:
+  # > Diablolll
+ - DOMAIN-SUFFIX,easebar.com
+ - DOMAIN-SUFFIX,swrve.com
+ - DOMAIN-SUFFIX,battle.net
+ - DOMAIN-SUFFIX,battlenet.com.cn
+ - DOMAIN-SUFFIX,blzstatic.cn
+ - DOMAIN-SUFFIX,blizzard.com
