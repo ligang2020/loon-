@@ -1,7 +1,7 @@
 # > 暗黑破坏神 by Ookla
 USER-AGENT,easebar*,easebar
-DOMAIN-KEYWORD,easebar
-DOMAIN-KEYWORD,battlenet
-DOMAIN-KEYWORD,blzstatic
-DOMAIN-KEYWORD,arkose
-DOMAIN-KEYWORD,doubleclick
+HOST-KEYWORD,easebar,easebar,
+HOST-KEYWORD,battlenet,battlenet,
+HOST-KEYWORD,blzstatic,blzstatic,
+HOST-KEYWORD,arkose,arkose,
+HOST-KEYWORD,doubleclick,doubleclick,
