@@ -1,0 +1,24 @@
+#!name = 菜鸟去广告
+#!desc = 过滤菜鸟广告（原菜鸟裹裹）
+#!openUrl = 
+#!author = ddgksf2013
+#!homepage = https://gitlab.com/lodepuly/vpn_tool/-/tree/main/Tool/Loon/Plugin
+#!icon = https://gitlab.com/lodepuly/iconlibrary/-/raw/master/App_icon/80px/Cainiao.png
+
+
+[Rewrite]
+# 通用广告请求[包含开屏广告]
+^https?:\/\/cn-acs\.m\.cainiao\.com\/gw\/mtop\.cainiao\.guoguo\.nbnetflow\.ads\.(show|mshow)\.cn reject-200
+
+[Script]
+# 不明请求
+http-response ^http:\/\/amdc\.m\.taobao\.com\/amdc\/mobileDispatch script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Cainiao/Cainiao_amdc_reject.js, tag = 移除不明请求
+# 首页中部的惊喜福利推广
+http-response ^https?:\/\/cn-acs\.m\.cainiao\.com\/gw\/mtop\.cainiao\.nbpresentation\.protocol\.homepage\.get\.cn script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Cainiao/Cainiao_remove_ads.js, requires-body = true, tag = 首页中部的惊喜福利推广
+# 搜索框下方今日好物推荐
+http-response ^https?:\/\/cn-acs\.m\.cainiao\.com\/gw\/mtop\.cainiao\.adkeyword script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Cainiao/Cainiao_remove_ads.js, requires-body = true, tag = 搜索框下方今日好物推荐
+# 首页底部商品推广
+http-response ^https?:\/\/cn-acs\.m\.cainiao\.com\/gw\/mtop\.cainiao\.guoguo\.nbnetflow\.ads\.index\.cn script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Cainiao/Cainiao_remove_ads.js, requires-body = true, tag = 首页底部商品推广
+
+[MITM]
+hostname = cn-acs.m.cainiao.com
