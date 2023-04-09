@@ -1,0 +1,62 @@
+#!name = 高德地图去广告
+#!desc = 过滤高德地图广告
+#!open= 
+#!author = RuCu6 kokoryh ddgksf2013
+#!homepage = https://gitlab.com/lodepuly/vpn_tool/-/tree/main/Tool/Loon/Plugin
+#!icon = https://gitlab.com/lodepuly/iconlibrary/-/raw/master/App_icon/80px/Amap.png
+
+#[Rule]
+#DOMAIN, awaken.amap.com, REJECT
+
+[Rewrite]
+# 其他
+^https:\/\/m5\.amap\.com\/ws\/asa\/ads_attribution\? reject-dict
+^https:\/\/m5\.amap\.com\/ws\/shield\/scene\/recommend\? reject-dict
+
+# 导航详情页 - 路线规划、地点详情页
+^https:\/\/m5\.amap\.com\/ws\/faas\/amap-navigation\/card-service-route-plan\? reject-dict
+^https:\/\/m5\.amap\.com\/ws\/shield\/search\/new_hotword\? reject-dict
+^https:\/\/m5\.amap\.com\/ws\/shield\/search_poi\/(city_feed|tips_adv)\? reject-dict
+
+# 首页 - 卡片、红点角标、右上角动图、搜索框热词、左下角天气、天气动效图层、消息横幅
+^https:\/\/m5\.amap\.com\/ws\/faas\/amap-navigation\/main-page-(assets|location)\? reject-dict
+^https:\/\/m5\.amap\.com\/ws\/(mapapi\/hint_text\/offline_data|message\/notice\/list|shield\/search\/new_hotword)\? reject-dict
+^https:\/\/m5\.amap\.com\/ws\/valueadded\/weather\/v2\? reject-dict
+^https:\/\/mps\.amap\.com\/ws\/mps\/scene\? reject
+^https:\/\/sns\.amap\.com\/ws\/msgbox\/pull(_mp)?\? reject-dict
+
+# 我的页面 - 足迹
+# ^https:\/\/sns\.amap\.com\/ws\/userview\/footprint reject-dict
+
+# 打车页 - 红点角标、弹窗、卡片
+^https:\/\/m5-zb\.amap\.com\/ws\/boss\/order(_web\/friendly_information|\/car\/king_toolbox_car_bubble)\? reject-dict
+
+[Script]
+# 不明请求
+http-response ^http:\/\/amdc\.m\.taobao\.com\/amdc\/mobileDispatch script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Amap/Amap_amdc_reject.js, tag = 移除不明请求
+
+# 导航详情页 - 路线规划、地点详情页
+http-response ^https:\/\/m5\.amap\.com\/ws\/shield\/search\/poi\/detail\? script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Amap/Amap_remove_ads.js, requires-body = true, tag = 移除导航详情页扰人组件
+http-response ^https:\/\/m5\.amap\.com\/ws\/shield\/search_poi\/(search\/sp|tips_operation_location)\? script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Amap/Amap_remove_ads.js, requires-body = true, tag = 移除导航详情页扰人组件
+
+# 首页 - 卡片、红点角标、右上角动图、搜索框热词、左下角天气、天气动效图层、消息横幅
+http-response ^https:\/\/m5\.amap\.com\/ws\/faas\/amap-navigation\/main-page\? script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Amap/Amap_remove_ads.js, requires-body = true, tag = 移除首页扰人组件
+http-response ^https:\/\/m5\.amap\.com\/ws\/mapapi\/poi\/infolite\/\? script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Amap/Amap_remove_ads.js, requires-body = true, tag = 移除首页扰人组件
+http-response ^https:\/\/m5\.amap\.com\/ws\/shield\/frogserver\/aocs\/updatable\/1\? script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Amap/Amap_remove_ads.js, requires-body = true, tag = 移除首页扰人组件
+
+# 我的页面 - 个人主页、卡片
+http-response ^https:\/\/m5\.amap\.com\/ws\/faas\/amap-navigation\/usr-profile-fc\/(highlightV2|home)\? script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Amap/Amap_remove_ads.js, requires-body = true, tag = 移除我的页面推广
+http-response ^https:\/\/m5\.amap\.com\/ws\/shield\/dsp\/profile\/index\/nodefaasv3\? script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Amap/Amap_remove_ads.js, requires-body = true, tag = 移除我的页面推广
+
+# 附近页
+http-response ^https:\/\/m5\.amap\.com\/ws\/shield\/search\/nearbyrec_smart\? script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Amap/Amap_remove_ads.js, requires-body = true, tag = 移除附近页推广
+
+# 开屏广告
+http-response ^https:\/\/m5\.amap\.com\/ws\/valueadded\/alimama\/splash_screen\? script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Amap/Amap_remove_ads.js, requires-body = true, tag = 移除开屏广告
+
+# 打车页 - 红点角标、弹窗、卡片
+http-response ^https:\/\/m5-zb\.amap\.com\/ws\/promotion-web\/resource\?? script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Amap/Amap_remove_ads.js, requires-body = true, tag = 移除打车页扰人组件
+http-response ^https:\/\/m5-zb\.amap\.com\/ws\/sharedtrip\/taxi\/order_detail_car_tips\? script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Amap/Amap_remove_ads.js, requires-body = true, tag = 移除打车页扰人组件
+
+[MITM]
+hostname = m5.amap.com, m5-zb.amap.com, mps.amap.com, sns.amap.com
